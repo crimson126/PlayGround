@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101619">
+  <title>Verdant — Cardbound Defense</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Verdant home"><span class="brand-mark">✳</span><span>VERDANT<span class="brand-sub">CARDBOUND DEFENSE</span></span></a>
+      <div class="run-label"><span class="live-dot"></span> THE WILDERNESS <span class="run-divider">/</span> <b>EXPEDITION 01</b></div>
+      <button class="icon-button" id="sound-toggle" aria-label="Toggle sound" title="Sound effects">♫</button>
+    </header>
+    <main class="layout">
+      <section class="game-column">
+        <div class="stage-heading">
+          <div><div class="eyebrow">SECTOR 01 <span>•</span> OVERGROWN RUINS</div><h1>Thornwake <span>Grove</span></h1></div>
+          <div class="stage-badge"><span>✦</span> STAGE <b id="stage-number">01</b></div>
+        </div>
+        <section class="battle-panel" aria-label="Battlefield">
+          <div class="battle-topline"><div class="battle-name"><span class="sun-icon">☀</span> <span id="phase-label">PREPARATION PHASE</span></div><div class="wave-progress"><span>WAVE</span><b id="wave-number">0</b><i>/</i><span id="wave-total">5</span><div class="progress-track"><div id="wave-progress-fill"></div></div></div></div>
+          <div class="board-wrap"><canvas id="battlefield" aria-label="Tower defense battlefield"></canvas><div class="board-toast" id="board-toast" aria-live="polite"></div><div class="board-hint" id="board-hint">SELECT A CARD, THEN PLACE IT ON THE GROVE</div></div>
+          <div class="battle-footer"><div class="battle-stat"><span class="stat-icon heart">♥</span><span><b id="lives">20</b><small>HEARTS</small></span><div class="mini-track"><i id="health-fill"></i></div></div><div class="battle-stat mana-stat"><span class="stat-icon">✧</span><span><b id="mana">10</b><small>SPIRIT</small></span></div><div class="battle-stat kills-stat"><span class="stat-icon">✹</span><span><b id="kills">0</b><small>ROOTS CLEARED</small></span></div><button id="wave-button" class="wave-button"><span>▶</span> BEGIN WAVE <kbd>1</kbd></button></div>
+        </section>
+        <section class="deck-section">
+          <div class="section-heading"><div><div class="eyebrow">YOUR HAND</div><h2>Choose your guardians</h2></div><div class="deck-tip"><span class="tip-icon">↗</span> Tap a card, then choose a clearing</div></div>
+          <div class="hand" id="hand"></div>
+          <div class="hand-note"><span>✦</span> Towers cost spirit to summon. Spirit regenerates as you defend.</div>
+        </section>
+      </section>
+      <aside class="side-column">
+        <section class="side-card expedition-card"><div class="side-card-top"><span class="eyebrow">EXPEDITION MAP</span><span class="map-coords">N 04° / E 19°</span></div><div class="map-visual"><div class="map-grid"></div><svg viewBox="0 0 300 108" role="img" aria-label="Map of the grove"><path class="map-path-shadow" d="M4 83 C35 83 30 25 75 28 S110 80 143 73 164 30 194 35 218 81 252 73 263 34 296 25"/><path class="map-path" d="M4 83 C35 83 30 25 75 28 S110 80 143 73 164 30 194 35 218 81 252 73 263 34 296 25"/><circle class="map-node" cx="4" cy="83" r="4"/><circle class="map-node goal" cx="296" cy="25" r="5"/><circle class="map-player" cx="143" cy="73" r="7"/></svg><span class="map-label map-label-a">MOSSFIELD</span><span class="map-label map-label-b">THORNWAKE</span><span class="map-label map-label-c">✧</span></div><div class="map-meta"><span><i class="map-dot"></i> CURRENT FRONT</span><b>ZONE 01—03</b></div></section>
+        <section class="side-card collection-card"><div class="collection-heading"><div><div class="eyebrow">FIELD JOURNAL</div><h2>Card collection</h2></div><span class="collection-count"><b id="collection-count">4</b><small>/ 8</small></span></div><div class="collection-grid" id="collection-grid"></div><div class="collection-footer"><span>Duplicate cards fuse into <b>stronger guardians.</b></span><span class="sparkle">✦</span></div></section>
+        <section class="side-card objective-card"><div class="objective-icon">✧</div><div><div class="eyebrow">GROVE OBJECTIVE</div><p>Keep the root-heart safe from the creeping blight.</p><div class="objective-progress"><span id="objective-text">Clear 5 waves</span><div class="objective-track"><i id="objective-fill"></i></div></div></div></section>
+        <div class="side-foot"><span>VERDANT ARCHIVE</span><span>BUILD 01.04</span></div>
+      </aside>
+    </main>
+  </div>
+  <div class="modal-backdrop hidden" id="modal-backdrop"><section class="reward-modal" id="reward-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></section></div>
+  <div class="mobile-veil" id="mobile-veil"></div>
+  <script src="game.js"></script>
+</body>
+</html>
