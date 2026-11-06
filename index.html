@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a19" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231a2825'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='%23e5b45d'%3E%E2%99%9C%3C/text%3E%3C/svg%3E" />
+  <title>Cardkeep — Tower Defense</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Cardkeep home"><span class="brand-mark">♜</span><span>CARD<span class="brand-light">KEEP</span></span></a>
+      <div class="chapter"><span class="chapter-kicker">THE OLD KINGDOM</span><span class="chapter-name">The Northern March</span></div>
+      <div class="top-actions"><div class="sound-chip"><span class="live-dot"></span> CAMPAIGN 01</div><button class="icon-btn" id="helpBtn" aria-label="How to play">?</button></div>
+    </header>
+
+    <section class="game-layout">
+      <section class="battle-column">
+        <div class="battle-heading">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> DEFEND THE REALM</div><h1>Ashenwood <em>Crossing</em></h1></div>
+          <div class="battle-state"><span class="state-icon">✦</span><span id="statusText">PREPARE YOUR DEFENSE</span></div>
+        </div>
+        <div class="board-frame">
+          <div class="board-topline"><span><i class="tiny-star">✦</i> THE OLD KING'S ROAD</span><span class="threat-label"><i></i> THREAT LEVEL <b id="threatLevel">I</b></span></div>
+          <div class="canvas-wrap"><canvas id="gameCanvas" aria-label="Tower defense battlefield"></canvas><div class="canvas-tip" id="canvasTip"><span>✦</span> CHOOSE A CARD TO PLACE YOUR DEFENSE</div><div class="wave-banner hidden" id="waveBanner">WAVE <b>1</b> INCOMING</div><div class="end-overlay hidden" id="endOverlay"><span class="end-emblem" id="endEmblem">✦</span><div class="end-kicker">THE BATTLE IS OVER</div><h2 id="endTitle">The realm endures</h2><p id="endCopy">Ashenwood stands. Your name is written into the old songs.</p><div class="end-stats"><span>WAVES <b id="endWaves">8</b></span><span>FOES FELLED <b id="endKills">0</b></span><span>GOLD LEFT <b id="endGold">0</b></span></div><button id="restartBtn">DEFEND AGAIN <span>↻</span></button></div></div>
+          <div class="board-legend"><span><i class="legend-road"></i> ENEMY ROUTE</span><span><i class="legend-tower">♜</i> DEFENSE</span><span class="legend-hint">CLICK A CARD, THEN AN EMPTY TILE</span></div>
+        </div>
+        <div class="battle-controls">
+          <div class="wave-progress"><span class="wave-number" id="waveCount">WAVE <b>0</b> / 8</span><div class="progress-track"><i id="progressFill"></i></div><span class="enemy-count" id="enemyCount">NO HOSTILES</span></div>
+          <button class="start-wave" id="startWave"><span class="play-icon">▶</span><span>BEGIN WAVE</span><kbd>SPACE</kbd></button>
+          <button class="pause-btn" id="speedBtn" aria-label="Toggle game speed">1×</button>
+          <button class="pause-btn" id="pauseBtn" aria-label="Pause game">Ⅱ</button>
+        </div>
+      </section>
+
+      <aside class="side-column">
+        <section class="resource-panel panel">
+          <div class="panel-label">YOUR RESERVES <span class="ornament">✦</span></div>
+          <div class="resources">
+            <div class="resource"><span class="resource-icon gold">◈</span><div><b id="goldValue">160</b><small>GOLD</small></div><span class="resource-change" id="goldChange"></span></div>
+            <div class="resource-divider"></div>
+            <div class="resource"><span class="resource-icon heart">♥</span><div><b id="lifeValue">20</b><small>KEEP VITALITY</small></div></div>
+          </div>
+        </section>
+        <section class="mission-panel panel">
+          <div class="panel-label">FIELD INTELLIGENCE <span class="intel-icon">⌁</span></div>
+          <div class="mission-row"><span class="mission-symbol">✦</span><div><b id="missionTitle">A quiet moment</b><p id="missionCopy">Scouts report movement beyond the treeline. Prepare your defenses.</p></div></div>
+          <div class="mission-footer"><span>ENEMIES DEFEATED</span><b id="killCount">0</b></div>
+        </section>
+        <section class="deck-panel">
+          <div class="deck-heading"><div><div class="panel-label">YOUR BATTLE DECK <span class="deck-count">04</span></div><p>Spend gold to shape the battlefield.</p></div><button class="deck-help" id="deckHelp" aria-label="Deck details">i</button></div>
+          <div class="hand" id="hand">
+            <button class="tower-card selected" data-type="archer" aria-label="Archer Tower, cost 60 gold">
+              <span class="card-cost"><i>◈</i> 60</span><span class="card-art archer-art"><span class="art-glow"></span><span class="tower-glyph">♜</span><span class="art-sparks">✦ · ✧</span></span><span class="card-name">WATCHTOWER</span><span class="card-subtitle">Long range · steady</span><span class="card-stats"><span>DMG <b>12</b></span><span>RANGE <b>3</b></span></span>
+            </button>
+            <button class="tower-card" data-type="cannon" aria-label="Cannon, cost 90 gold">
+              <span class="card-cost"><i>◈</i> 90</span><span class="card-art cannon-art"><span class="art-glow"></span><span class="tower-glyph">✹</span><span class="art-sparks">· ✧ ·</span></span><span class="card-name">IRONMOUTH</span><span class="card-subtitle">Heavy hits · slow</span><span class="card-stats"><span>DMG <b>30</b></span><span>RANGE <b>2</b></span></span>
+            </button>
+            <button class="tower-card" data-type="frost" aria-label="Frost Mage, cost 75 gold">
+              <span class="card-cost"><i>◈</i> 75</span><span class="card-art frost-art"><span class="art-glow"></span><span class="tower-glyph">❄</span><span class="art-sparks">✧ ❄ ✧</span></span><span class="card-name">FROSTWITCH</span><span class="card-subtitle">Slows · crowd control</span><span class="card-stats"><span>DMG <b>7</b></span><span>RANGE <b>2.5</b></span></span>
+            </button>
+            <button class="tower-card" data-type="sun" aria-label="Sun Shrine, cost 80 gold">
+              <span class="card-cost"><i>◈</i> 80</span><span class="card-art sun-art"><span class="art-glow"></span><span class="tower-glyph">☼</span><span class="art-sparks">✦ · ✧</span></span><span class="card-name">SUN SHRINE</span><span class="card-subtitle">Earns gold · support</span><span class="card-stats"><span>YIELD <b>8</b></span><span>EVERY <b>8s</b></span></span>
+            </button>
+          </div>
+          <div class="deck-tip" id="deckTip"><span class="tip-star">✦</span><span>SELECT A CARD, THEN PLACE IT ON THE FIELD</span></div>
+          <div class="selected-info" id="selectedInfo"><span class="selected-mark">♜</span><span><b>WATCHTOWER SELECTED</b><small>Click an open tile to place · <kbd>1</kbd></small></span><button id="cancelPlacement" aria-label="Cancel placement">×</button></div>
+        </section>
+        <div class="side-foot"><span>✧</span> HOLD THE ROAD. HOLD THE REALM. <span>✧</span></div>
+      </aside>
+    </section>
+    <footer class="footer"><span>CARDS OF THE OLD KINGDOM <b>·</b> BUILD 01.08</span><span>ASHENWOOD FRONTIER <b>—</b> TURN <i id="turnNum">01</i></span></footer>
+  </main>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop"><section class="modal"><button class="modal-close" id="modalClose">×</button><div class="eyebrow"><span class="eyebrow-line"></span> FIELD MANUAL</div><h2>Hold the <em>crossing.</em></h2><p>The old road leads straight to your keep. Build defenses beside it, then survive all eight enemy waves.</p><div class="help-steps"><div><span>01</span><b>Choose a card</b><small>Each defense costs gold. Your reserves replenish between waves.</small></div><div><span>02</span><b>Place your towers</b><small>Click a clear tile near the road. Towers automatically attack enemies in range.</small></div><div><span>03</span><b>Start the wave</b><small>Enemies follow the road. If they reach the gate, you lose vitality. Keep it above zero.</small></div></div><button class="modal-cta" id="modalOk">UNDERSTOOD · LET'S DEFEND</button></section></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="game.js"></script>
+</body>
+</html>
